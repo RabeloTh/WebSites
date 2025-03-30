@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGB Finances</title>
+    <link rel="icon" href="https://portal2.ugb.edu.br/Content/img/logoUGBWhiteM.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://portal2.ugb.edu.br/Content/img/logoUGBWhiteM.png" type="image/x-icon">
+    <link rel="stylesheet" href="mod2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <style>
+        /* Estilos para a tabela de valores */
+        .tabela-container {
+            margin-top: 20px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tabela-valores {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+
+        .tabela-valores th, .tabela-valores td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tabela-valores thead tr {
+            background-color: #f0f0f0;
+            color: #003366;
+            font-weight: 600;
+        }
+
+        .tabela-valores tbody tr:hover {
+            background-color: #f8f8f8;
+        }
+
+        .tabela-valores tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Estilos para os gráficos */
+        #graficoDashboard, #graficoRelatorio {
+            flex-direction: column;
+        }
+
+        .tabela-container {
+            width: 100%;
+        }
+
+        /* Estilos para o botão de impressão */
+        #imprimirDados {
+            display: block;
+            margin: 20px auto; /* Centraliza horizontalmente */
+            padding: 10px 20px;
+            background-color: #098bc7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            text-align: center; /* Garante o alinhamento do texto dentro do botão */
+        }
+
+        #imprimirDados:hover {
+            background-color: #a04582;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .relatorio, .relatorio * {
+                visibility: visible;
+                display: block;
+            }
+            .relatorio {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+
+        /* Estilos para o sistema de suporte */
+        #chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        #chat-header {
+            background-color: #270325;
+            color: white;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 300px;
+        }
+
+        #chat-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        #chat-messages {
+            background-color: #f0f0f0;
+            height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            width: 300px;
+        }
+
+        #chat-input-area {
+            display: flex;
+            margin-top: 10px;
+            width: 300px;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 14px;
+        }
+
+        #chat-send-button {
+            background-color: #0c335e;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #chat-send-button:hover {
+            background-color: #401972;
+        }
+
+        .message {
+            margin-bottom: 5px;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .message.user {
+            background-color: #d0f0c0;
+            text-align: right;
+        }
+
+        .message.support {
+            background-color: #e0f7fa;
+            text-align: left;
+        }
+
+        #chat-window {
+            display: none;
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 300px;
+            height: 300px;
+            flex-direction: column;
+            display: flex;
+        }
+        #chat-header.closed + #chat-window {
+            display: none;
+        }
+
+        #chat-header.open + #chat-window{
+            display: flex;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://portal2.ugb.edu.br/Content/img/logoUGBWhiteM.png" alt="Logo da UGB" class="user-image" width="80" height="80">
+        <h1>Sistema de Contabilidade UGB</h1>
+        <nav role="navigation" aria-label="Menu principal">
+            <ul style="display: flex; justify-content: center; list-style: none; padding: 0;">
+                <li style="margin: -10 10px;"><a href="#dashboard">Dashboard</a></li>
+                <li style="margin: -10 10px;"><a href="#clientes">Clientes</a></li>
+                <li style="margin: -10 10px;"><a href="#fornecedores">Fornecedores</a></li>
+                <li style="margin: -10 10px;"><a href="#transacoes">Transações</a></li>
+                <li style="margin: -10 10px;"><a href="#relatorios">Relatórios</a></li>
+                <li style="margin: -10 10px;"><a href="#ajuda">Ajuda</a></li>
+            </ul>
+        </nav>
+    </header>    
+
+    <main>
+        <section id="dashboard" class="content" aria-labelledby="dashboard-title">
+            <h2 id="dashboard-title">Dashboard</h2>
+            <div class="cards">
+                <div class="card"><h3>Receita Total</h3><p>R$ 0,00</p></div>
+                <div class="card"><h3>Despesa Total</h3><p>R$ 0,00</p></div>
+                <div class="card"><h3>Saldo Atual</h3><p>R$ 0,00</p></div>
+            </div>
+            <canvas id="graficoDashboard"></canvas>
+        </section>
+
+        <section id="clientes" class="content" aria-labelledby="clientes-title">
+            <h2 id="clientes-title">Clientes</h2>
+            <div class="filtro-pesquisa">
+                <input type="text" id="pesquisaCliente" placeholder="Pesquisar cliente...">
+                <input type="date" id="filtrarClienteData" placeholder="Filtrar por Data">
+                <button id="filtrarCliente">Filtrar</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CNPJ/CPF</th>
+                            <th>Endereço</th>
+                            <th>Contato</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaClientes"></tbody>
+                </table>
+            </div>
+            <button id="cadastrarCliente">Cadastrar Cliente</button>
+        </section>
+
+        <section id="fornecedores" class="content" aria-labelledby="fornecedores-title">
+            <h2 id="fornecedores-title">Fornecedores</h2>
+            <div class="filtro-pesquisa">
+                <input type="text" id="pesquisaFornecedor" placeholder="Pesquisar fornecedor...">
+                <input type="date" id="filtrarClienteData" placeholder="Filtrar por Data">
+                <button id="filtrarFornecedor">Filtrar</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CNPJ/CPF</th>
+                            <th>Endereço</th>
+                            <th>Contato</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaFornecedores"></tbody>
+                </table>
+            </div>
+            <button id="cadastrarFornecedor">Cadastrar Fornecedor</button>
+        </section>
+
+        <section id="transacoes" class="content" aria-labelledby="transacoes-title">
+            <h2 id="transacoes-title">Transações</h2>
+            <div class="filtro-pesquisa">
+                <input type="date" id="filtroDataInicio">
+                <input type="date" id="filtroDataFim">
+                <select id="filtroTipo">
+                    <option value="">Todos</option>
+                    <option value="receita">Receita</option>
+                    <option value="despesa">Despesa</option>
+                </select>
+                <input type="text" id="pesquisaTransacao" placeholder="Pesquisar transação...">
+                <button id="filtrarTransacao">Filtrar</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th>Tipo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaTransacoes"></tbody>
+                </table>
+            </div>
+            <button id="cadastrarTransacao">Cadastrar Transação</button>
+        </section>
+
+        <section id="relatorios" class="content" aria-labelledby="relatorios-title">
+            <h2 id="relatorios-title">Relatórios</h2>
+            <button id="gerarRelatorioFluxoCaixa">Gerar Relatório de Fluxo de Caixa</button>
+            <canvas id="graficoRelatorio"></canvas>
+            <button id="imprimirDados">Imprimir Dados</button>
+        </section>
+
+        <section id="ajuda" class="content" aria-labelledby="ajuda-title">
+            <h2 id="ajuda-title">Ajuda</h2>
+            <p>Informações sobre como usar o sistema.</p>
+            <button id="btnSuporte"><i><i class="fab fa-whatsapp"></i></i> Contato ao Suporte</button>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Sistema de Contabilidade UGB. Todos os direitos reservados a Rabelo.</p>
+    </footer>
+
+    <div id="cadastroClienteForm" class="cadastro-form">
+        <h2>Cadastrar Cliente</h2>
+        <label for="nomeCliente">Nome:</label>
+        <input type="text" id="nomeCliente">
+        <label for="cnpjCpfCliente">CNPJ/CPF:</label>
+        <input type="text" id="cnpjCpfCliente">
+        <label for="enderecoCliente">Endereço:</label>
+        <input type="text" id="enderecoCliente">
+        <label for="contatoCliente">Contato:</label>
+        <input type="text" id="contatoCliente">
+        <button id="salvarCliente">Salvar</button>
+        <button id="cancelarCliente">Cancelar</button>
+    </div>
+
+    <div id="cadastroFornecedorForm" class="cadastro-form">
+        <h2>Cadastrar Fornecedor</h2>
+        <label for="nomeFornecedor">Nome:</label>
+        <input type="text" id="nomeFornecedor">
+        <label for="cnpjCpfFornecedor">CNPJ/CPF:</label>
+        <input type="text" id="cnpjCpfFornecedor">
+        <label for="enderecoFornecedor">Endereço:</label>
+        <input type="text" id="enderecoFornecedor">
+        <label for="contatoFornecedor">Contato:</label>
+        <input type="text" id="contatoFornecedor">
+        <button id="salvarFornecedor">Salvar</button>
+        <button id="cancelarFornecedor">Cancelar</button>
+    </div>
+
+    <div id="cadastroTransacaoForm" class="cadastro-form">
+        <h2>Cadastrar Transação</h2>
+        <label for="dataTransacao">Data:</label>
+        <input type="date" id="dataTransacao">
+        <label for="descricaoTransacao">Descrição:</label>
+        <input type="text" id="descricaoTransacao">
+        <label for="valorTransacao">Valor:</label>
+        <input type="number" id="valorTransacao">
+        <label for="tipoTransacao">Tipo:</label>
+        <select id="tipoTransacao">
+            <option value="Receita">Receita</option>
+            <option value="Despesa">Despesa</option>
+        </select>
+        <button id="salvarTransacao">Salvar</button>
+        <button id="cancelarTransacao">Cancelar</button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div id="chat-container">
+        <div id="chat-header" class="closed">
+            <h3>Suporte Online</h3>
+            <i class="ph-bold ph-caret-up"></i>
+        </div>
+        <div id="chat-window">
+            <div id="chat-messages"></div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+                <button id="chat-send-button">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       // Função para inicializar o chat de suporte
+        function inicializarChatSuporte() {
+            const chatHeader = document.getElementById('chat-header');
+            const chatWindow = document.getElementById('chat-window');
+            const chatInput = document.getElementById('chat-input');
+            const chatSendButton = document.getElementById('chat-send-button');
+            const chatMessages = document.getElementById('chat-messages');
+            const headerIcon = chatHeader.querySelector('i');
+            const headerTitle = chatHeader.querySelector('h3');
+
+            let chatOpen = false;
+            const mensagens = [];
+
+            chatHeader.addEventListener('click', () => {
+                chatOpen = !chatOpen;
+                if (chatOpen) {
+                    chatHeader.classList.remove('closed');
+                    chatHeader.classList.add('open');
+                    headerIcon.classList.remove('ph-caret-up');
+                    headerIcon.classList.add('ph-caret-down');
+                    headerTitle.style.opacity = 1;
+                    chatWindow.style.display = 'flex';
+                    setTimeout(()=> {
+                        chatMessages.style.display = 'block';
+                        chatInputArea.style.display = 'flex';
+                    }, 300);
+
+                } else {
+                    chatHeader.classList.remove('open');
+                    chatHeader.classList.add('closed');
+                    headerIcon.classList.remove('ph-caret-down');
+                    headerIcon.classList.add('ph-caret-up');
+                    headerTitle.style.opacity = 0;
+                    chatMessages.style.display = 'none';
+                    chatInputArea.style.display = 'none';
+                    chatWindow.style.display = 'none';
+                }
+            });
+
+            chatSendButton.addEventListener('click', () => {
+                const mensagem = chatInput.value;
+                if (mensagem.trim() !== '') {
+                    mensagens.push({ texto: mensagem, tipo: 'user' });
+                    chatMessages.innerHTML += `<div class="message user">${mensagem}</div>`;
+                    chatInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                    setTimeout(() => {
+                        const resposta = gerarRespostaSuporte(mensagem);
+                        mensagens.push({ texto: resposta, tipo: 'support' });
+                        chatMessages.innerHTML += `<div class="message support">${resposta}</div>`;
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 1000);
+                }
+            });
+
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    chatSendButton.click();
+                }
+            });
+
+            function gerarRespostaSuporte(mensagem) {
+                mensagem = mensagem.toLowerCase();
+                if (mensagem.includes('cadastro')) {
+                    return "Para cadastrar um novo item, clique no botão correspondente (Cliente, Fornecedor, Transação) e preencha o formulário.";
+                } else if (mensagem.includes('filtro')) {
+                    return "Para filtrar os dados, clique no botão 'Filtrar' na seção desejada e preencha os critérios de filtro.";
+                } else if (mensagem.includes('gráfico') || mensagem.includes('relatório')) {
+                    return "O gráfico de fluxo de caixa é gerado automaticamente ao cadastrar transações. Clique em 'Gerar Relatório de Fluxo de Caixa' para atualizá-lo.";
+                } else if (mensagem.includes('imprimir')) {
+                    return "Clique no botão 'Imprimir Dados' para gerar uma versão para impressão dos dados exibidos.";
+                } else {
+                    return "Desculpe, não entendi sua pergunta. Por favor, seja mais específico.";
+                }
+            }
+        }
+
+        // Inicializar o chat de suporte
+        inicializarChatSuporte();
+    </script>
+
+    <script src="function.js"></script>
+</body>
+</html>

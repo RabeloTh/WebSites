@@ -1,0 +1,516 @@
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif, sans-serif;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #e0f7fa, #f0f4fb); /* Novo gradiente de fundo */
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #003366; /* cor de fundo do cabeçalho */
+    color: white; /* cor d texto*/
+    padding: 20px 0; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header img {
+    margin-left: 20px; /* Aumentei a margem esquerda */
+    border-radius: 50%;
+    width: 90px; /* Aumentei o tamanho da imagem */
+    height: 90px;
+    transition: transform 0.2s ease; /* Adicionei transição */
+}
+
+header img:hover {
+    transform: scale(1.05); /* Efeito de scale no hover */
+}
+
+header h1 {
+    margin: 0 0 0 16px; /* Aumentei a margem esquerda */
+    font-size: 20px; /* Aumentei o tamanho da fonte */
+    text-align: left;
+    letter-spacing: 1px; /* Espaçamento entre letras */
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none; 
+    padding: 0; 
+    margin: 0;
+}
+
+nav ul li {
+    margin-left: 26px; /* Aumentei a margem esquerda */
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    transition: color 0.3s ease, transform 0.2s ease, background-color 0.3s ease; /* Transições adicionais */
+    padding: 12px 2px; /* Aumentei o padding */
+    border-radius: 8px; /* Aumentei o border-radius */
+    display: block; /* Para o padding funcionar corretamente */
+}
+
+nav ul li a:hover {
+    color: #ffffff;
+    background-color: #0050a0; /* Tom mais escuro no hover */
+    transform: translateY(-2px) scale(1.05); /* Efeito de scale no hover */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Adicionei sombra no hover */
+}
+
+main {
+    padding: 20px; /* Adiciona preenchimento à seção principal */
+    margin: 0 auto; /* Centraliza a seção principal horizontalmente */
+    max-width: 1200px; /* Define a largura máxima da seção principal */
+}
+
+
+section {
+    margin-bottom: 40px; /* Aumentei a margem inferior */
+    background-color: white;
+    padding: 40px; /* Aumentei o padding */
+    border-radius: 12px; /* Aumentei o border-radius */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra mais suave */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+section:hover {
+    background-color: #f5fafa; /* Tom de fundo mais claro no hover */
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1); /* Aumentei a sombra no hover */
+}
+
+h2 {
+    color: #003366; /* Define a cor do texto do título */
+    font-size: 28px; /* Define o tamanho da fonte do título */
+    margin-bottom: 20px; /* Adiciona margem inferior ao título */
+    
+}
+section h2 {
+    margin-top: 0;
+    font-size: 32px; /* Aumentei o tamanho da fonte */
+    margin-bottom: 30px; /* Aumentei a margem inferior */
+    color: #003366;
+    border-bottom: 3px solid #5c1645;
+    padding-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Aumentei a largura mínima */
+    gap: 30px; /* Aumentei o gap */
+    margin-bottom: 30px; /* Aumentei a margem inferior */
+}
+
+.card {
+    background-color: #f5f5f5;
+    padding: 30px; /* Aumentei o padding */
+    border-radius: 12px; /* Aumentei o border-radius */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Sombra mais suave */
+    border: 1px solid #eee; /* Cor da borda mais clara */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Transições adicionais */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* Aumentei a sombra no hover */
+    background-color: #fff;
+}
+
+.card h3 {
+    margin: 0 0 10px 0; /* Remove a margem superior e adiciona margem inferior */
+    color: #003366; /* Define a cor do texto do título do card */
+    font-size: 20px; /* Define o tamanho da fonte do título do card */
+}
+
+.card p {
+    margin: 0; /* Remove as margens do parágrafo */
+    font-size: 18px; /* Define o tamanho da fonte do parágrafo */
+    color: #4a5568; /* Define a cor do texto do parágrafo */
+    font-weight: 600; /* Define o peso da fonte do parágrafo */
+}
+
+.filtro-pesquisa {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Aumentei o gap */
+    margin-bottom: 30px; /* Aumentei a margem inferior */
+    align-items: center;
+}
+
+.filtro-pesquisa input[type="text"],
+.filtro-pesquisa input[type="date"],
+.filtro-pesquisa select {
+    padding: 15px; /* Aumentei o padding */
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Aumentei o border-radius */
+    font-size: 16px;
+    width: 300px; /* Aumentei a largura */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Adicionei box-sizing */
+}
+
+.filtro-pesquisa input[type="text"]:focus,
+.filtro-pesquisa input[type="date"]:focus,
+.filtro-pesquisa select:focus {
+    outline: none;
+    border-color: #007bff; /* Cor de foco mais forte */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1); /* Cor de sombra de foco */
+}
+
+
+.filtro-pesquisa button {
+    background-color: #003366;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px; /* Aumentei o border-radius */
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    font-weight: 600;
+}
+
+.filtro-pesquisa button:hover {
+    background-color: #002e5e;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Aumentei a sombra no hover */
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 30px; /* Aumentei a margem inferior */
+    border: 1px solid #eee; /* Cor da borda mais clara */
+    border-radius: 12px; /* Aumentei o border-radius */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra mais suave */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 12px; /* Aumentei o border-radius */
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+table thead tr {
+    background-color: #f0f0f0;
+    color: #003366;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+table thead tr:hover {
+    background-color: #e0e0e0;
+}
+
+table th, table td {
+    padding: 18px; /* Aumentei o padding */
+    text-align: left;
+    border-bottom: 1px solid #eee; /* Cor da borda mais clara */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+table tbody tr:hover {
+    background-color: #f8f8f8;
+    color: #800000; /* Cor do texto no hover */
+}
+
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#cadastrarCliente,
+#cadastrarFornecedor,
+#cadastrarTransacao,
+#gerarRelatorioFluxoCaixa,
+.content button {
+    background-color: #004080; /* Tom mais escuro de azul */
+    color: #ffffff;
+    padding: 14px 25px; /* Aumentei o padding */
+    border: none;
+    border-radius: 8px; /* Aumentei o border-radius */
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    margin-top: 20px; /* Aumentei a margem superior */
+    font-weight: 600;
+}
+
+#cadastrarCliente:hover,
+#cadastrarFornecedor:hover,
+#cadastrarTransacao:hover,
+#gerarRelatorioFluxoCaixa:hover,
+.content button:hover {
+    background-color: #003060; /* Tom mais escuro no hover */
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#graficoDashboard,
+#graficoRelatorio {
+    width: 100%;
+    height: auto;
+    max-height: 450px; /* Aumentei a altura máxima */
+    margin-top: 30px; /* Aumentei a margem superior */
+    background-color: white;
+    border-radius: 12px; /* Aumentei o border-radius */
+    padding: 30px; /* Aumentei o padding */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra mais suave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#graficoDashboard canvas,
+#graficoRelatorio canvas {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+footer {
+    background-color: #012850; /* Tom mais escuro de azul */
+    color: white;
+    text-align: center;
+    padding: 30px; /* Aumentei o padding */
+    margin-top: 50px; /* Aumentei a margem superior */
+    border-top: 5px solid #5c1645;
+}
+
+footer p {
+    font-size: 16px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+footer p:hover {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header img {
+        margin-bottom: 15px; /* Aumentei a margem inferior */
+        margin-left: 0;
+    }
+
+    header h1 {
+        margin-bottom: 15px; /* Aumentei a margem inferior */
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin-left: 0;
+        margin-top: 10px; /* Aumentei a margem superior */
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .filtro-pesquisa {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filtro-pesquisa input[type="text"],
+    .filtro-pesquisa input[type="date"],
+    .filtro-pesquisa select {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 20px 0;
+    }
+
+    header h1 {
+        font-size: 28px; /* Reduzi o tamanho da fonte */
+    }
+
+    nav ul li a {
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+
+    section {
+        padding: 25px; /* Reduzi o padding */
+    }
+
+    .card {
+        padding: 20px; /* Reduzi o padding */
+    }
+
+    .filtro-pesquisa button {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+
+    footer {
+        padding: 25px; /* Reduzi o padding */
+    }
+}
+
+        /* Estilos para a tabela de valores */
+        .tabela-container {
+            margin-top: 30px;
+            width: 95%; /* Aumentei a largura */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tabela-valores {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px; /* Aumentei o border-radius */
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra mais suave */
+            border: 1px solid #eee; /* Cor da borda mais clara */
+        }
+
+        .tabela-valores th, .tabela-valores td {
+            padding: 15px; /* Aumentei o padding */
+            text-align: left;
+            border-bottom: 1px solid #eee; /* Cor da borda mais clara */
+        }
+
+        .tabela-valores thead tr {
+            background-color: #f0f0f0;
+            color: #003366;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
+
+        .tabela-valores thead tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tabela-valores tbody tr:hover {
+            background-color: #f8f8f8;
+            color: #004080; /* Cor do texto no hover */
+        }
+
+        .tabela-valores tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Estilos para os gráficos */
+        #graficoDashboard, #graficoRelatorio {
+            flex-direction: column;
+        }
+
+        .tabela-container {
+            width: 100%;
+        }
+
+        /* Estilos para o formulário de cadastro */
+        .cadastro-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f4f4f4;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 400px; /* Largura fixa para melhor layout */
+        }
+
+        .cadastro-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .cadastro-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .cadastro-form input, .cadastro-form select {
+            width: calc(100% - 22px); /* Ajuste para padding e borda */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box; /* Garante que padding e borda não afetem a largura total */
+        }
+
+        .cadastro-form button {
+            background-color: #003366;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%; /* Divide os botões igualmente */
+            margin-top: 10px;
+        }
+
+        .cadastro-form button:hover {
+            background-color: #002244;
+        }
+
+        .cadastro-form .btn-cancelar {
+            background-color: #ccc;
+            color: #333;
+        }
+
+        .cadastro-form .btn-cancelar:hover {
+            background-color: #bbb;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Estilos para ícones */
+        .cadastro-form i {
+            margin-right: 8px;
+        }
